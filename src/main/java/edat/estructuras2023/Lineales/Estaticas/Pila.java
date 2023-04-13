@@ -11,6 +11,13 @@ public class Pila {
         this.tope = -1;
     }
 
+    //Constructor por defecto de tamanio 10
+
+    public Pila() {
+        this.arreglo = new Object[10];
+        this.tope = -1;
+    }
+
     public boolean apilar(Object nuevoElem) {
         boolean exito = false;
         if (this.tope < this.arreglo.length - 1) {
