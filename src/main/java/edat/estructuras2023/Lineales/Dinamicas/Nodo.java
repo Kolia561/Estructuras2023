@@ -8,6 +8,11 @@ public class Nodo {
         this.elem = elem;
         this.enlace = enlace;
     }
+
+    public Nodo() {
+        this.elem = null;
+        this.enlace = null;
+    }
     
     public Object getElem() {
         return elem;

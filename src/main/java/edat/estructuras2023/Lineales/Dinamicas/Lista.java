@@ -1,5 +1,7 @@
 package edat.estructuras2023.Lineales.Dinamicas;
 
+import javax.lang.model.util.ElementScanner14;
+
 public class Lista{
 
     private Nodo cabecera;
@@ -13,11 +15,20 @@ public class Lista{
     public boolean insertar (Object nuevoElem, int pos){
         boolean exito = false;
 
-        if(pos>0 && longitud-pos >= 0){
+        if(pos>0 && pos<=(longitud+1)){
+            
+            //System.out.println("entro");
 
             if(pos == 1){
+                if(this.cabecera==null){
+                    Nodo nuevoNodo = new Nodo(nuevoElem, this.cabecera);
+                    this.cabecera = nuevoNodo;
+                    this.longitud=1;
+                }else{
                 Nodo nuevoNodo = new Nodo(nuevoElem, this.cabecera);
                 this.cabecera = nuevoNodo;
+                this.longitud++;
+                }
             }else{
                 Nodo aux = this.cabecera;
                 int i = 1;
@@ -27,9 +38,9 @@ public class Lista{
                 }
                 Nodo nuevoNodo = new Nodo(nuevoElem, aux.getEnlace());
                 aux.setEnlace(nuevoNodo);
-            }
-            this.longitud++;
 
+                this.longitud++;
+            }
             exito = true;
         }
 
@@ -40,10 +51,11 @@ public class Lista{
 
         boolean exito = false;
 
-        if(pos>0 && longitud-pos > 0){
+        if(pos>0 && pos<=this.longitud){
 
             if(pos == 1){
                 this.cabecera = this.cabecera.getEnlace();
+                this.longitud--;
             }else{
                 Nodo aux = this.cabecera;
                 int i = 1;
@@ -52,8 +64,9 @@ public class Lista{
                     i++;
                 }
                 aux.setEnlace(aux.getEnlace().getEnlace());
+                this.longitud--;
             }
-            this.longitud--;
+            
 
             exito = true;
         }
@@ -64,7 +77,7 @@ public class Lista{
 
         Object rta=null;
 
-        if (pos>0 && longitud-pos>0){
+        if (pos>0 && longitud-pos>=0){
 
             if (pos == 1){
                 rta=this.cabecera.getElem();
@@ -80,7 +93,7 @@ public class Lista{
 
         }
 
-        return Object;
+        return rta;
 
     }
 
@@ -97,7 +110,7 @@ public class Lista{
             }else{
 
                 int i = 2;
-                boolean exito=falso;
+                boolean exito=false;
                 Nodo aux = this.cabecera;
     
                 while(i<longitud && !exito){
@@ -135,7 +148,7 @@ public class Lista{
 
         boolean rta=false;
 
-        if (this.cabecera!=null){
+        if (this.cabecera==null){
 
             rta=true;
         }
@@ -144,7 +157,12 @@ public class Lista{
         return rta;
     }
 
-    public Lista Clone(){
+    public int longitud(){
+
+        return this.longitud;
+    }
+
+    public Lista clone(){
 
         Lista clon= new Lista();
 
@@ -167,16 +185,16 @@ public class Lista{
 
     public String toString(){
 
-        String rta="( ";
+        String rta="(";
 
         if(longitud>0){
         int i=1;
 
         Nodo aux=this.cabecera;
 
-            while(i<=longitud){
+            while(aux!=null){
 
-                String sAux="[";
+                String sAux=" [";
                 sAux+=aux.getElem().toString();
                 sAux+="]";
 
