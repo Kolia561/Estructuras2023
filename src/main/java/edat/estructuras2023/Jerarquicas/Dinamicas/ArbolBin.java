@@ -1,8 +1,10 @@
 package edat.estructuras2023.Jerarquicas.Dinamicas;
 
+import javax.swing.text.DefaultStyledDocument.ElementBuffer;
+
 import edat.estructuras2023.Lineales.Dinamicas.Cola;
 import edat.estructuras2023.Lineales.Dinamicas.Lista;
-import edat.estructuras2023.Lineales.Dinamicas.Pila;
+
 
 public class ArbolBin {
 
@@ -66,7 +68,7 @@ public class ArbolBin {
 
         boolean rta=false;
 
-        if (this.raiz !=null){
+        if (this.raiz == null){
             rta=true;
         }
 
@@ -115,24 +117,25 @@ public class ArbolBin {
         return rta;
     }
 
-    public NodoArbol padre(NodoArbol elem){
+    public Object padre(Object elem){
 
-        NodoArbol rta=null;
+        Object rta=null;
 
-        rta=padreAux(this.raiz, elem);
+        if(this.raiz!=null&& !this.raiz.getElem().equals(elem)){
+        rta=padreAux(this.raiz, elem);}
         
         return rta;
     }
 
-    public NodoArbol padreAux(NodoArbol nodo, NodoArbol elem){
+    public Object padreAux(NodoArbol nodo, Object elem){
         
-        NodoArbol rta=null;
+        Object rta=null;
 
         if(nodo!=null){
             //si el nodo no es nulo, comprueba si el hijo izquierdo o derecho contiene elemento buscado
-            if(nodo.getIzquierdo().getElem().equals(elem) || nodo.getDerecho().getElem().equals(elem)){
+            if(nodo.getIzquierdo()!=null && nodo.getIzquierdo().getElem().equals(elem) ||nodo.getDerecho()!=null && nodo.getDerecho().getElem().equals(elem)){
                 //si lo contiene, devuelve el nodo
-                rta=nodo;
+                rta=nodo.getElem();
             }else{ //si no lo contiene, busca en el hijo izquierdo y derecho
                 rta=padreAux(nodo.getIzquierdo(), elem);
                 //si no lo encuentra en el hijo izquierdo, busca en el derecho
@@ -145,10 +148,34 @@ public class ArbolBin {
         return rta;
     }
 
-    public int nivel(NodoArbol elem){
-        int rta;
+    public int nivel(Object elem){
+        int rta=-1;
 
-       rta=alturaAux(obtenerNodo(this.raiz, elem));
+        if(this.raiz!=null){ 
+        rta=nivelAux(this.raiz,elem);
+        if (rta!=-1){
+            rta--;
+        }
+        }
+
+        return rta;
+    }
+
+    private int nivelAux(NodoArbol nodo, Object elem){
+        int rta=-1;
+        if(nodo!=null){
+            if(nodo.getElem().equals(elem)){
+                rta=0;
+            }else{
+                rta=nivelAux(nodo.getIzquierdo(), elem);
+                if(rta==-1){
+                    rta=nivelAux(nodo.getDerecho(), elem);
+                }
+            }
+            if  (rta >-1){
+                rta++;
+            }
+        }
 
         return rta;
     }
@@ -226,7 +253,7 @@ public class ArbolBin {
             cola.poner(this.raiz);
 
             while (!cola.esVacia()){
-                aux=cola.obtenerFrente();
+                aux=(NodoArbol)cola.obtenerFrente();
                 cola.sacar();
                 rta.insertar(aux.getElem(), rta.longitud()+1);
                 if(aux.getIzquierdo()!=null){
@@ -272,7 +299,7 @@ public class ArbolBin {
 
     public String toString(){
 
-        Srting rta="";
+        String rta="";
 
         if(this.raiz!=null){
             rta=toStringAux(this.raiz);
@@ -304,6 +331,22 @@ public class ArbolBin {
         return rta;
     }
 
+    public Lista frontera(){
+        Lista rta=new Lista();
+        fronteraAux(this.raiz, rta);
+        return rta;
+    }
+
+    private void fronteraAux(NodoArbol nodo, Lista lista){
+        if(nodo!=null){
+            if(nodo.getIzquierdo()==null && nodo.getDerecho()==null){
+                lista.insertar(nodo.getElem(), lista.longitud()+1);
+            }else{
+                fronteraAux(nodo.getIzquierdo(), lista);
+                fronteraAux(nodo.getDerecho(), lista);
+            }
+        }
+    }
 
 }
 
