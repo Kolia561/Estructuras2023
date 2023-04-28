@@ -1,6 +1,8 @@
 package edat.estructuras2023.Jerarquicas.Dinamicas;
 
+import edat.estructuras2023.Lineales.Dinamicas.Cola;
 import edat.estructuras2023.Lineales.Dinamicas.Lista;
+import edat.estructuras2023.Lineales.Dinamicas.Pila;
 
 public class ArbolBin {
 
@@ -95,9 +97,12 @@ public class ArbolBin {
         }else{
             // rta = 1 + Math.max(alturaAux(nodo.getIzquierdo()), alturaAux(nodo.getDerecho())
 
+            
+            altIzq=alturaAux(nodo.getIzquierdo());
+            
             altDer=alturaAux(nodo.getDerecho());
 
-            altIzq=alturaAux(nodo.getIzquierdo());
+            
             
             if(altDer>altIzq){
                 rta=altDer+1;
@@ -159,8 +164,9 @@ public class ArbolBin {
 
         lista.insertar(nodo.getElem(), lista.longitud()+1);
         
-        lista = listarPreordenAux(nodo.getDerecho(), lista);
         lista = listarPreordenAux(nodo.getIzquierdo(), lista);
+        lista = listarPreordenAux(nodo.getDerecho(), lista);
+        
 
         }
 
@@ -176,11 +182,14 @@ public class ArbolBin {
         
         if(nodo!=null){
 
-        lista = listarInordenAux(nodo.getDerecho(), lista);
-
+            lista = listarInordenAux(nodo.getIzquierdo(), lista);
+        
         lista.insertar(nodo.getElem(), lista.longitud()+1);
 
-        lista = listarInordenAux(nodo.getIzquierdo(), lista);
+        lista = listarInordenAux(nodo.getDerecho(), lista);
+
+
+ 
 
         }
 
@@ -196,9 +205,10 @@ public class ArbolBin {
         
         if(nodo!=null){
 
-        lista = listarPosordenAux(nodo.getDerecho(), lista);
 
         lista = listarPosordenAux(nodo.getIzquierdo(), lista);
+
+        lista = listarPosordenAux(nodo.getDerecho(), lista);     
 
         lista.insertar(nodo.getElem(), lista.longitud()+1);
 
@@ -209,18 +219,90 @@ public class ArbolBin {
 
     public Lista listarPorNiveles(){
         Lista rta=new Lista();
-        return listarPorNivelesAux(this.raiz,rta);
-    }
+        Cola cola=new Cola();
+        NodoArbol aux =this.raiz;
 
-    private Lista listarPorNivelesAux(NodoArbol nodo, Lista lista){
+        if (this.raiz!=null) {
+            cola.poner(this.raiz.getElem());
+
+            while (!cola.esVacia()){
+                aux=cola.obtenerFrente();
+                cola.sacar();
+                rta.insertar(aux.getElem(), rta.longitud()+1);
+                if(aux.getIzquierdo()!=null){
+                    cola.poner(aux.getIzquierdo().getElem());
+                }
+                if(aux.getDerecho()!=null){
+                    cola.poner(aux.getDerecho().getElem());
+                }
+
         
-        if(nodo!=null){
-        
+            }
+
         }
 
-        return lista;
+        return rta;
     }
 
+    public ArbolBin clone(){
+        ArbolBin clon=new ArbolBin();
+        
+        if(this.raiz!=null){
+            clon.raiz=new NodoArbol(this.raiz.getElem(), null, null);
+            cloneAux(this.raiz, clon.raiz);
+        }
+
+
+        return clon;
+    }
+
+    private void cloneAux(NodoArbol nodo, NodoArbol clon){
+        if(nodo!=null){
+            if(nodo.getIzquierdo()!=null){
+                clon.setIzquierdo(new NodoArbol(nodo.getIzquierdo().getElem(), null, null));
+                cloneAux(nodo.getIzquierdo(), clon.getIzquierdo());
+            }
+            if(nodo.getDerecho()!=null){
+                clon.setDerecho(new NodoArbol(nodo.getDerecho().getElem(), null, null));
+                cloneAux(nodo.getDerecho(), clon.getDerecho());
+            }
+        }
+    }
+
+
+    public String toString(){
+
+        Srting rta="";
+
+        if(this.raiz!=null){
+            rta=toStringAux(this.raiz);
+        }
+
+        return rta;
+    }
+
+    private String toStringAux(NodoArbol nodo){
+        String rta="";
+
+        if(nodo!=null){
+            rta=nodo.getElem().toString();
+            if(nodo.getIzquierdo()!=null){
+                rta=rta + " HI: " + nodo.getIzquierdo().getElem().toString();
+            }else{
+                rta=rta + " HI: - ";
+            }
+            if(nodo.getDerecho()!=null){
+                rta=rta + " HD: " + nodo.getDerecho().getElem().toString();
+            }else{
+                rta=rta + " HD: - ";
+            }
+            rta=rta+"\n";
+            rta=rta+toStringAux(nodo.getIzquierdo());
+            rta=rta+toStringAux(nodo.getDerecho());
+        }
+
+        return rta;
+    }
 
 
 }

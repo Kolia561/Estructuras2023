@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edat.estructuras2023;
+package edat.estructuras2023.Jerarquicas;
 
-import jerarquicas.dinamicas.ArbolBin;
+
 
 /**
  *
