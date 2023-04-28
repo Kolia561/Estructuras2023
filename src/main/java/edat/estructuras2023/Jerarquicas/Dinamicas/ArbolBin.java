@@ -223,7 +223,7 @@ public class ArbolBin {
         NodoArbol aux =this.raiz;
 
         if (this.raiz!=null) {
-            cola.poner(this.raiz.getElem());
+            cola.poner(this.raiz);
 
             while (!cola.esVacia()){
                 aux=cola.obtenerFrente();

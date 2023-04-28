@@ -5,7 +5,7 @@
  */
 package edat.estructuras2023.Jerarquicas;
 
-
+import edat.estructuras2023.Jerarquicas.Dinamicas.ArbolBin;
 
 /**
  *
