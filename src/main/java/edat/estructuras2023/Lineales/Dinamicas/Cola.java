@@ -54,21 +54,22 @@ public class Cola {
         this.fin = null;
     }
 
-    public Cola clone() {
-        Cola clon = new Cola();
-        if (this.frente != null) {
-            clon.frente = clonarAux(this.frente);
-            clon.fin = clonarAux(this.fin);
-        }
-        return clon;
-    }
+    //clona la cola en un nuevo objeto, con referencias a los elementos de la original
 
-    private Nodo clonarAux(Nodo nodo) {
-        Nodo clon = null;
-        if (nodo != null) {
-            clon = new Nodo(nodo.getElem(), clonarAux(nodo.getEnlace()));
+    public Cola clone() {
+        Cola colaClon = new Cola();
+        if (this.frente != null) {
+            colaClon.frente = new Nodo(this.frente.getElem(), null);
+            Nodo aux = this.frente.getEnlace();
+            Nodo aux2 = colaClon.frente;
+            while (aux != null) {
+                aux2.setEnlace(new Nodo(aux.getElem(), null));
+                aux = aux.getEnlace();
+                aux2 = aux2.getEnlace();
+            }
+            colaClon.fin = aux2;
         }
-        return clon;
+        return colaClon;
     }
 
 

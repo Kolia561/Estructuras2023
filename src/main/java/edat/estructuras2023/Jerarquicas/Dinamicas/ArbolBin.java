@@ -247,7 +247,7 @@ public class ArbolBin {
     public Lista listarPorNiveles(){
         Lista rta=new Lista();
         Cola cola=new Cola();
-        NodoArbol aux =this.raiz;
+        NodoArbol aux;
 
         if (this.raiz!=null) {
             cola.poner(this.raiz);
@@ -257,10 +257,10 @@ public class ArbolBin {
                 cola.sacar();
                 rta.insertar(aux.getElem(), rta.longitud()+1);
                 if(aux.getIzquierdo()!=null){
-                    cola.poner(aux.getIzquierdo().getElem());
+                    cola.poner(aux.getIzquierdo());
                 }
                 if(aux.getDerecho()!=null){
-                    cola.poner(aux.getDerecho().getElem());
+                    cola.poner(aux.getDerecho());
                 }
 
         
