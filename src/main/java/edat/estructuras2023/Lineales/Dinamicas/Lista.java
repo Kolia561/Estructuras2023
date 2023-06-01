@@ -2,9 +2,9 @@ package edat.estructuras2023.Lineales.Dinamicas;
 
 
 
-public class Lista{
+public class Lista<T>{
 
-    private Nodo cabecera;
+    private Nodo<T> cabecera;
     private int longitud;
 
     public Lista(){
@@ -12,7 +12,7 @@ public class Lista{
         this.longitud = 0;
     }
 
-    public boolean insertar (Object nuevoElem, int pos){
+    public boolean insertar (T nuevoElem, int pos){
         boolean exito = false;
 
         if(pos>0 && pos<=(longitud+1)){
@@ -21,22 +21,22 @@ public class Lista{
 
             if(pos == 1){
                 if(this.cabecera==null){
-                    Nodo nuevoNodo = new Nodo(nuevoElem, this.cabecera);
+                    Nodo<T> nuevoNodo = new Nodo<T>(nuevoElem, this.cabecera);
                     this.cabecera = nuevoNodo;
                     this.longitud=1;
                 }else{
-                Nodo nuevoNodo = new Nodo(nuevoElem, this.cabecera);
+                Nodo<T> nuevoNodo = new Nodo<T>(nuevoElem, this.cabecera);
                 this.cabecera = nuevoNodo;
                 this.longitud++;
                 }
             }else{
-                Nodo aux = this.cabecera;
+                Nodo<T> aux = this.cabecera;
                 int i = 1;
                 while(i < pos-1){
                     aux = aux.getEnlace();
                     i++;
                 }
-                Nodo nuevoNodo = new Nodo(nuevoElem, aux.getEnlace());
+                Nodo<T> nuevoNodo = new Nodo<T>(nuevoElem, aux.getEnlace());
                 aux.setEnlace(nuevoNodo);
 
                 this.longitud++;
@@ -57,7 +57,7 @@ public class Lista{
                 this.cabecera = this.cabecera.getEnlace();
                 this.longitud--;
             }else{
-                Nodo aux = this.cabecera;
+                Nodo<T> aux = this.cabecera;
                 int i = 1;
                 while(i < pos-1){
                     aux = aux.getEnlace();
@@ -73,16 +73,16 @@ public class Lista{
     return exito;
     }
 
-    public Object recuperar (int pos){
+    public T recuperar (int pos){
 
-        Object rta=null;
+        T rta=null;
 
         if (pos>0 && longitud-pos>=0){
 
             if (pos == 1){
                 rta=this.cabecera.getElem();
             }else{
-                Nodo aux=this.cabecera;
+                Nodo<T> aux=this.cabecera;
                 int i = 1;
                 while(i < pos){
                     aux = aux.getEnlace();
@@ -97,7 +97,7 @@ public class Lista{
 
     }
 
-    public int localizar (Object elem){
+    public int localizar (T elem){
 
         int rta=-1;
         
@@ -111,7 +111,7 @@ public class Lista{
 
                 int i = 2;
                 boolean exito=false;
-                Nodo aux = this.cabecera;
+                Nodo<T> aux = this.cabecera;
     
                 while(i<longitud && !exito){
 
@@ -162,14 +162,14 @@ public class Lista{
         return this.longitud;
     }
 
-    public Lista clone(){
+    public Lista<T> clone(){
 
-        Lista clon= new Lista();
+        Lista<T> clon= new Lista<T>();
 
         if(longitud>0){
 
         int i=1;
-        Nodo aux = this.cabecera;
+        Nodo<T> aux = this.cabecera;
         while(i<=this.longitud){
 
             clon.insertar(aux.getElem(), i);
@@ -188,9 +188,9 @@ public class Lista{
         String rta="(";
 
         if(longitud>0){
-        int i=1;
+        
 
-        Nodo aux=this.cabecera;
+        Nodo<T> aux=this.cabecera;
 
             while(aux!=null){
 
@@ -200,7 +200,7 @@ public class Lista{
 
                 rta+=sAux;
                 aux=aux.getEnlace();
-                i++;
+                
 
             }
 

@@ -1,10 +1,10 @@
 package edat.estructuras2023.Lineales.Dinamicas;
 
-public class Nodo {
-    private Object elem;
-    private Nodo enlace;
+public class Nodo<T> {
+    private T elem;
+    private Nodo<T> enlace;
     
-    public Nodo(Object elem, Nodo enlace) {
+    public Nodo(T elem, Nodo<T> enlace) {
         this.elem = elem;
         this.enlace = enlace;
     }
@@ -14,19 +14,19 @@ public class Nodo {
         this.enlace = null;
     }
     
-    public Object getElem() {
+    public T getElem() {
         return elem;
     }
     
-    public void setElem(Object elem) {
+    public void setElem(T elem) {
         this.elem = elem;
     }
     
-    public Nodo getEnlace() {
+    public Nodo<T> getEnlace() {
         return enlace;
     }
     
-    public void setEnlace(Nodo enlace) {
+    public void setEnlace(Nodo<T> enlace) {
         this.enlace = enlace;
     }
 }    
