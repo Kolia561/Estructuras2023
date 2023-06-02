@@ -67,5 +67,51 @@ public class ABB<T extends Comparable<T>> {
     }
 
 
+    private boolean eliminarRec(NodoABB<T> nodo, T elem){
+
+        boolean rta=false;
+
+        if (nodo!=null){
+            if(nodo.esIgual(elem)){
+                if(nodo.esHoja()){
+                    nodo=null;
+                    rta=true;
+            }else{
+
+                if(nodo.getIzq()!=null && nodo.getDer()!=null){
+                    nodo.setElem(buscarMin(nodo.getIzq()));
+                    rta=eliminarRec(nodo.getDer(),nodo.getElem());
+                }else{
+                    if(nodo.getIzq()!=null){
+                        nodo.setElem(buscarMin(nodo.getIzq()));
+                        rta=eliminarRec(nodo.getIzq(),nodo.getElem());
+                    }else{
+                        nodo.setElem(buscarMin(nodo.getDer()));
+                        rta=eliminarRec(nodo.getDer(),nodo.getElem());
+                    }
+                }
+
+            }
+        }
+    }
+
+        return rta;
+    }
+
+    private T buscarMin(NodoABB<T> nodo){
+
+        T rta=null;
+
+        if(nodo!=null){
+            if(nodo.getDer()==null){
+                rta=nodo.getElem();
+            }else{
+                rta=buscarMin(nodo.getDer());
+            }
+        }
+
+        return rta;
+    }
+
     
 }
