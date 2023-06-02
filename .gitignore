@@ -1,3 +1,4 @@
 target/*
-target/classes
+target/classes/*
 target/classes/edat/estructuras2023/Lineales/Dinamicas/Nodo.class
+target

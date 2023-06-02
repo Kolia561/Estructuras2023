@@ -1,6 +1,6 @@
 package edat.estructuras2023.Conjuntistas.Dinamicas;
 
-
+import javax.xml.transform.Source;
 
 public class ABB<T extends Comparable<T>> {
 
@@ -56,49 +56,115 @@ public class ABB<T extends Comparable<T>> {
 
         boolean rta = false;
 
-        if(this.raiz!=null){
+       
 
-            rta=eliminarRec(this.raiz,elem);
-        }
+            rta=eliminarRec(this.raiz,elem,null);
+        
+    
 
         return rta;
 
 
     }
 
-
-    private boolean eliminarRec(NodoABB<T> nodo, T elem){
+    private boolean caso1(NodoABB<T> nodo){
 
         boolean rta=false;
 
-        if (nodo!=null){
-            if(nodo.esIgual(elem)){
-                if(nodo.esHoja()){
-                    nodo=null;
-                    rta=true;
-            }else{
+        if(nodo.esHoja()){
+            nodo=null;
+            rta=true;
+            
+        }
 
-                if(nodo.getIzq()!=null && nodo.getDer()!=null){
-                    nodo.setElem(buscarMin(nodo.getIzq()));
-                    rta=eliminarRec(nodo.getDer(),nodo.getElem());
+        return rta;
+    }
+    
+    private boolean caso2(NodoABB<T> nodo, NodoABB<T> padre){
+
+        boolean rta=false;
+
+        if(nodo.getIzq()!=null){
+
+            if(padre!=null){
+                padre.setIzq(nodo.getIzq());
+                rta=true;
+            }else{
+                this.raiz=nodo.getIzq();
+                rta=true;
+            }
+
+        }else{
+
+            if(padre!=null){
+                padre.setDer(nodo.getDer());
+                rta=true;
+            }else{
+                this.raiz=nodo.getDer();
+                rta=true;
+            }
+
+        }
+
+        return rta;
+    }
+    
+    private boolean caso3(NodoABB<T> nodo){
+
+        boolean rta=false;
+        if(nodo.getIzq()!=null && nodo.getDer()!=null){
+
+            nodo.setElem(buscarMaxIzq(nodo.getIzq()));
+            rta=eliminarRec(nodo.getIzq(),nodo.getElem(),nodo);
+        }
+
+        return rta;
+    }
+    
+    private boolean eliminarRec(NodoABB<T> nodo, T elem, NodoABB<T> padre){
+
+        boolean rta=false;
+
+        
+
+        if (nodo!=null){
+
+           
+
+            if(nodo.esIgual(elem)){
+               
+                if(rta=caso1(nodo)){
+                        //System.out.println("caso1");
                 }else{
-                    if(nodo.getIzq()!=null){
-                        nodo.setElem(buscarMin(nodo.getIzq()));
-                        rta=eliminarRec(nodo.getIzq(),nodo.getElem());
+
+                    if(rta=caso3(nodo)){
+                        //System.out.println("caso3");
                     }else{
-                        nodo.setElem(buscarMin(nodo.getDer()));
-                        rta=eliminarRec(nodo.getDer(),nodo.getElem());
+                        //System.out.println("caso2");
+                        rta=caso2(nodo,padre);
+                        }
+                       
                     }
                 }
 
+            }else{
+
+                if(nodo.esMenor(elem)){
+                    
+                    rta=eliminarRec(nodo.getIzq(),elem,nodo);
+                
+                }else{
+
+                    rta=eliminarRec(nodo.getDer(),elem,nodo);
+
+                }
             }
-        }
-    }
+        
 
         return rta;
     }
 
-    private T buscarMin(NodoABB<T> nodo){
+    private T buscarMaxIzq(NodoABB<T> nodo){
 
         T rta=null;
 
@@ -106,7 +172,7 @@ public class ABB<T extends Comparable<T>> {
             if(nodo.getDer()==null){
                 rta=nodo.getElem();
             }else{
-                rta=buscarMin(nodo.getDer());
+                rta=buscarMaxIzq(nodo.getDer());
             }
         }
 
