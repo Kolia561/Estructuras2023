@@ -67,7 +67,7 @@ public class Pila {
     private String toStringAux(Nodo nodo) {
         String cadena = "";
         if (nodo != null) {
-            cadena = nodo.getElem() + " " + toStringAux(nodo.getEnlace());
+            cadena =  toStringAux(nodo.getEnlace()) + nodo.getElem() + " " ;
         }
         return cadena;
     }

@@ -67,7 +67,7 @@ public class Pila {
         String cadena = "";
         if (this.tope != -1) {
             for (int i = this.tope; i >= 0; i--) {
-                cadena += this.arreglo[i] + " ";
+                cadena = this.arreglo[i] + " " + cadena;
             }
         }
         return cadena;
